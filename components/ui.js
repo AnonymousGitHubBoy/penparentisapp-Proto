@@ -1,20 +1,11 @@
 // components/ui.js — the small set of pieces every screen is built from.
-// Keeping them in one file means the look changes in one place.
 
 import React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  StyleSheet,
-  Linking,
-} from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, gradients, lift, radius, space } from '../theme';
 
-// A screen body that scrolls and leaves room for the tab bar.
 export function Screen({ children }) {
   return (
     <ScrollView
@@ -27,7 +18,6 @@ export function Screen({ children }) {
   );
 }
 
-// The blue gradient header. `bloom` adds the warm gold corner from the mockup.
 export function Header({ title, subtitle, children }) {
   const insets = useSafeAreaInsets();
   return (
@@ -58,31 +48,15 @@ export function Card({ children, style }) {
 export function Button({ label, onPress, variant = 'primary' }) {
   if (variant === 'outline') {
     return (
-      <Pressable
-        onPress={onPress}
-        style={({ pressed }) => [
-          s.btn,
-          s.btnOutline,
-          lift,
-          pressed && s.pressed,
-        ]}
-      >
+      <Pressable onPress={onPress} style={({ pressed }) => [s.btn, s.btnOutline, lift, pressed && s.pressed]}>
         <Text style={[s.btnText, { color: colors.royal }]}>{label}</Text>
       </Pressable>
     );
   }
-  const palette =
-    variant === 'gold'
-      ? gradients.gold
-      : variant === 'dark'
-      ? ['#16244A', colors.ink]
-      : gradients.button;
+  const palette = variant === 'gold' ? gradients.gold : variant === 'dark' ? ['#16244A', colors.ink] : gradients.button;
   const textColor = variant === 'gold' ? '#231702' : '#FFFFFF';
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [lift, s.btnWrap, pressed && s.pressed]}
-    >
+    <Pressable onPress={onPress} style={({ pressed }) => [lift, s.btnWrap, pressed && s.pressed]}>
       <LinearGradient colors={palette} style={s.btn}>
         <Text style={[s.btnText, { color: textColor }]}>{label}</Text>
       </LinearGradient>
@@ -90,49 +64,18 @@ export function Button({ label, onPress, variant = 'primary' }) {
   );
 }
 
-// Opens a URL in the phone's browser. Every external link in this app
-// goes through here, which keeps donations outside the app stores' billing.
 export function openLink(url) {
   Linking.openURL(url).catch(() => {});
 }
 
 const s = StyleSheet.create({
-  header: {
-    paddingHorizontal: space.lg,
-    paddingBottom: space.lg,
-    overflow: 'hidden',
-  },
-  headerTitle: {
-    color: '#FFFFFF',
-    fontSize: 26,
-    fontWeight: '700',
-    letterSpacing: -0.2,
-  },
-  headerSub: {
-    color: 'rgba(255,255,255,0.75)',
-    fontSize: 12.5,
-    marginTop: 4,
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: radius.md,
-    padding: space.md,
-    marginBottom: space.sm,
-    borderWidth: 1,
-    borderColor: colors.line,
-  },
+  header: { paddingHorizontal: space.lg, paddingBottom: space.lg, overflow: 'hidden' },
+  headerTitle: { color: '#FFFFFF', fontSize: 26, fontWeight: '700', letterSpacing: -0.2 },
+  headerSub: { color: 'rgba(255,255,255,0.75)', fontSize: 12.5, marginTop: 4 },
+  card: { backgroundColor: '#FFFFFF', borderRadius: radius.md, padding: space.md, marginBottom: space.sm, borderWidth: 1, borderColor: colors.line },
   btnWrap: { borderRadius: radius.md, marginBottom: space.sm },
-  btn: {
-    borderRadius: radius.md,
-    paddingVertical: 15,
-    alignItems: 'center',
-  },
-  btnOutline: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1.5,
-    borderColor: colors.royal,
-    marginBottom: space.sm,
-  },
+  btn: { borderRadius: radius.md, paddingVertical: 15, alignItems: 'center' },
+  btnOutline: { backgroundColor: '#FFFFFF', borderWidth: 1.5, borderColor: colors.royal, marginBottom: space.sm },
   btnText: { fontSize: 14.5, fontWeight: '600' },
   pressed: { transform: [{ scale: 0.99 }], opacity: 0.92 },
 });

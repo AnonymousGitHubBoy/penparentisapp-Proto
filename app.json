@@ -1,13 +1,17 @@
 {
   "expo": {
     "name": "penparentisapp",
-    "slug": "penparentisapp",
+    "slug": "penparentis",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ronycodedevsteam.penparentis",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -15,10 +19,17 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "package": "com.ronycodedevsteam.penparentis"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b166120f-0481-42c8-9aa7-6f1d33c13f83"
+      }
+    },
+    "owner": "ronycodedevs-team"
   }
 }

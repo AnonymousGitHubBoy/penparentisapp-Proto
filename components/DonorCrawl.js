@@ -1,16 +1,11 @@
-// components/DonorCrawl.js — US 8: "a banner scroll which will display a list of donors."
-//
-// A looped horizontal scroll. The row is rendered twice back-to-back and
-// the whole thing is translated left forever; when it's shifted by exactly
-// one row's width it resets to 0, which is invisible to the eye because
-// the second copy is sitting right where the first one started.
+// components/DonorCrawl.js — the scrolling donor banner.
 
 import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, Animated, StyleSheet } from 'react-native';
 import { colors } from '../theme';
 import { DONORS } from '../donors';
 
-const SPEED = 40; // pixels per second — tune for taste
+const SPEED = 40;
 
 export default function DonorCrawl() {
   const x = useRef(new Animated.Value(0)).current;
@@ -20,11 +15,7 @@ export default function DonorCrawl() {
     if (!rowWidth) return;
     x.setValue(0);
     const loop = Animated.loop(
-      Animated.timing(x, {
-        toValue: -rowWidth,
-        duration: (rowWidth / SPEED) * 1000,
-        useNativeDriver: true,
-      })
+      Animated.timing(x, { toValue: -rowWidth, duration: (rowWidth / SPEED) * 1000, useNativeDriver: true })
     );
     loop.start();
     return () => loop.stop();
@@ -35,12 +26,7 @@ export default function DonorCrawl() {
   return (
     <View style={s.wrap}>
       <Animated.View style={[s.row, { transform: [{ translateX: x }] }]}>
-        <Text
-          style={s.text}
-          onLayout={(e) => setRowWidth(e.nativeEvent.layout.width)}
-        >
-          {line}
-        </Text>
+        <Text style={s.text} onLayout={(e) => setRowWidth(e.nativeEvent.layout.width)}>{line}</Text>
         <Text style={s.text}>{line}</Text>
       </Animated.View>
     </View>
@@ -50,5 +36,5 @@ export default function DonorCrawl() {
 const s = StyleSheet.create({
   wrap: { height: 34, backgroundColor: colors.ink, overflow: 'hidden', justifyContent: 'center' },
   row: { flexDirection: 'row' },
-  text: { color: '#F0E6D2', fontSize: 11.5, paddingRight: 0 },
+  text: { color: '#F0E6D2', fontSize: 11.5 },
 });
